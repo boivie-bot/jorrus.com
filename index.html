@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jorrus — Strategic Advisory</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'%3E%3Crect width='32' height='32' fill='%23f0ece3'/%3E%3Ccircle cx='16' cy='16' r='13' stroke='%23c8c0b0' stroke-width='0.75'/%3E%3Ccircle cx='16' cy='16' r='9' stroke='%237a6a40' stroke-width='1'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%231a1714'/%3E%3Cline x1='16' y1='1' x2='16' y2='6' stroke='%231a1714' stroke-width='1.2'/%3E%3Cline x1='16' y1='26' x2='16' y2='31' stroke='%231a1714' stroke-width='1.2'/%3E%3Cline x1='1' y1='16' x2='6' y2='16' stroke='%231a1714' stroke-width='1.2'/%3E%3Cline x1='26' y1='16' x2='31' y2='16' stroke='%231a1714' stroke-width='1.2'/%3E%3Cline x1='4' y1='4' x2='7' y2='7' stroke='%237a6a40' stroke-width='1'/%3E%3Cline x1='28' y1='4' x2='25' y2='7' stroke='%237a6a40' stroke-width='1'/%3E%3Cline x1='4' y1='28' x2='7' y2='25' stroke='%237a6a40' stroke-width='1'/%3E%3Cline x1='28' y1='28' x2='25' y2='25' stroke='%237a6a40' stroke-width='1'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&family=Spectral:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { scroll-behavior: smooth; }
+
+:root {
+  --cream: #f0ece3;
+  --cream-dark: #e8e0d2;
+  --ink: #1a1714;
+  --ink-mid: #2e2a26;
+  --gold: #7a6a40;
+  --gold-light: #c8a96e;
+  --rule: #c8c0b0;
+  --rule-light: #ddd6c8;
+  --muted: #8a8070;
+  --muted-dark: #6a6055;
+  --serif: 'Spectral', Georgia, serif;
+  --mono: 'Fragment Mono', monospace;
+  --sans: 'Outfit', sans-serif;
+}
+
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+
+/* ── GRAIN ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9000; opacity: 0.5;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem 4rem;
+  background: rgba(240,236,227,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rule);
+  transition: padding 0.3s;
+}
+nav.scrolled { padding: 1rem 4rem; }
+
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.1rem; font-weight: 200;
+  letter-spacing: 0.38em; text-transform: uppercase;
+  color: var(--ink); text-decoration: none;
+}
+
+.nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+.nav-links a {
+  font-family: var(--mono); font-size: 0.6rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  padding: 0.55rem 1.4rem;
+  border: 1px solid var(--ink);
+  font-family: var(--mono); font-size: 0.6rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink); text-decoration: none;
+  transition: all 0.2s;
+}
+.nav-cta:hover { background: var(--ink); color: var(--cream); }
+
+/* ── SECTION UTILITY ── */
+.section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 4rem; }
+.section-header {
+  display: flex; align-items: baseline; gap: 1.5rem;
+  margin-bottom: 4rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.section-num { font-family: var(--mono); font-size: 0.6rem; color: var(--gold); letter-spacing: 0.14em; white-space: nowrap; }
+.section-title { font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 200; color: var(--ink); line-height: 1.15; }
+.section-rule { flex: 1; height: 1px; background: transparent; }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+.rd1 { transition-delay: 0.1s; }
+.rd2 { transition-delay: 0.2s; }
+.rd3 { transition-delay: 0.3s; }
+.rd4 { transition-delay: 0.4s; }
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.hero {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: 100vh;
+  border-bottom: 1px solid var(--rule);
+  padding-top: 72px;
+}
+
+.hero-sidebar {
+  border-right: 1px solid var(--rule);
+  padding: 4rem 3rem;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  position: sticky; top: 72px;
+  height: calc(100vh - 72px);
+}
+
+.sidebar-block { margin-bottom: 2.5rem; }
+.sidebar-label {
+  font-family: var(--mono); font-size: 0.56rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 0.6rem;
+}
+.sidebar-val {
+  font-family: var(--serif); font-size: 0.95rem; font-weight: 300;
+  color: var(--ink); line-height: 1.55;
+}
+.sidebar-val.large {
+  font-size: 3.5rem; font-weight: 200; line-height: 1;
+}
+
+.sidebar-sectors { list-style: none; display: flex; flex-direction: column; gap: 0; }
+.sidebar-sectors li {
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink); padding: 0.65rem 0;
+  border-bottom: 1px solid var(--rule-light);
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.sidebar-sectors li::before {
+  content: ''; display: block; width: 5px; height: 5px;
+  border-radius: 50%; background: var(--gold); flex-shrink: 0;
+}
+
+.geo-mark {
+  width: 100px; height: 100px; flex-shrink: 0;
+}
+.geo-mark svg { width: 100%; height: 100%; }
+
+.hero-main {
+  padding: 5rem 5rem 5rem;
+  display: flex; flex-direction: column;
+  justify-content: center;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono); font-size: 0.6rem;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 2.5rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.hero-eyebrow::before { content: ''; width: 2.5rem; height: 1px; background: var(--gold); display: block; }
+
+.hero-headline {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 5.5vw, 5.2rem);
+  font-weight: 200; line-height: 1.08;
+  color: var(--ink); margin-bottom: 2.5rem;
+  letter-spacing: -0.01em;
+}
+.hero-headline em { font-style: italic; color: var(--gold); }
+
+.hero-body {
+  font-family: var(--sans); font-size: 1rem; font-weight: 300;
+  color: var(--muted-dark); line-height: 1.85;
+  max-width: 560px; margin-bottom: 3.5rem;
+}
+.hero-body strong { color: var(--ink); font-weight: 500; }
+
+.hero-divider { width: 100%; height: 1px; background: var(--rule); margin-bottom: 3.5rem; }
+
+.hero-tenets {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  border: 1px solid var(--rule); max-width: 680px;
+}
+.hero-tenet {
+  padding: 1.5rem 1.75rem;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  transition: background 0.2s;
+}
+.hero-tenet:nth-child(2n) { border-right: none; }
+.hero-tenet:nth-last-child(-n+2) { border-bottom: none; }
+.hero-tenet:hover { background: var(--cream-dark); }
+.tenet-num {
+  font-family: var(--mono); font-size: 0.56rem;
+  letter-spacing: 0.14em; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.tenet-text {
+  font-family: var(--serif); font-size: 0.95rem; font-weight: 300;
+  color: var(--ink); line-height: 1.4;
+}
+
+/* ══════════════════════════════
+   MANIFESTO BAND
+══════════════════════════════ */
+.manifesto-band {
+  background: var(--ink);
+  padding: 6rem 0;
+  position: relative; overflow: hidden;
+}
+.manifesto-band::before {
+  content: 'JORRUS';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--serif); font-size: 22vw; font-weight: 200;
+  color: rgba(255,255,255,0.025);
+  white-space: nowrap; pointer-events: none; letter-spacing: 0.1em;
+}
+.manifesto-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 4rem;
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: 6rem; align-items: start;
+}
+.manifesto-label {
+  font-family: var(--mono); font-size: 0.58rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(240,236,227,0.25); padding-top: 0.5rem;
+  line-height: 1.8;
+}
+.manifesto-quote {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 200; font-style: italic;
+  color: var(--cream); line-height: 1.65;
+}
+.manifesto-quote strong {
+  font-style: normal; font-weight: 300;
+  color: var(--gold-light);
+}
+
+/* ══════════════════════════════
+   APPROACH
+══════════════════════════════ */
+.approach-section { padding: 7rem 0; border-bottom: 1px solid var(--rule); }
+
+.approach-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 0; border: 1px solid var(--rule);
+}
+.approach-card {
+  padding: 3rem 2.5rem;
+  border-right: 1px solid var(--rule);
+  position: relative; overflow: hidden;
+  transition: background 0.25s;
+}
+.approach-card:last-child { border-right: none; }
+.approach-card:hover { background: var(--cream-dark); }
+.approach-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 2px;
+  background: var(--gold);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.35s;
+}
+.approach-card:hover::after { transform: scaleX(1); }
+
+.approach-num {
+  font-family: var(--serif); font-size: 3.5rem; font-weight: 200;
+  color: var(--rule); line-height: 1; margin-bottom: 1.5rem;
+}
+.approach-title {
+  font-family: var(--serif); font-size: 1.25rem; font-weight: 300;
+  color: var(--ink); margin-bottom: 0.85rem; line-height: 1.25;
+}
+.approach-desc {
+  font-size: 0.88rem; color: var(--muted); line-height: 1.8; font-weight: 300;
+}
+
+/* ══════════════════════════════
+   EXPERTISE
+══════════════════════════════ */
+.expertise-section { padding: 7rem 0; border-bottom: 1px solid var(--rule); }
+
+.expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0; background: var(--rule);
+}
+.expertise-card {
+  background: var(--cream);
+  padding: 2.75rem 3rem;
+  transition: background 0.2s;
+  display: flex; gap: 2rem; align-items: flex-start;
+}
+.expertise-card:hover { background: #fff; }
+.exp-icon {
+  flex-shrink: 0; width: 40px; height: 40px;
+  border: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+}
+.exp-icon svg { width: 18px; height: 18px; }
+.exp-content {}
+.exp-sector {
+  font-family: var(--mono); font-size: 0.55rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.5rem;
+}
+.exp-title {
+  font-family: var(--serif); font-size: 1.1rem; font-weight: 300;
+  color: var(--ink); margin-bottom: 0.5rem; line-height: 1.25;
+}
+.exp-desc {
+  font-size: 0.84rem; color: var(--muted); line-height: 1.75; font-weight: 300;
+}
+
+/* ══════════════════════════════
+   TEAM
+══════════════════════════════ */
+.team-section { padding: 7rem 0; border-bottom: 1px solid var(--rule); }
+
+.team-intro {
+  max-width: 700px; margin-bottom: 4rem;
+  font-family: var(--serif); font-size: 1.25rem; font-weight: 200;
+  font-style: italic; color: var(--muted-dark); line-height: 1.7;
+}
+.team-intro strong { font-style: normal; font-weight: 300; color: var(--ink); }
+
+.team-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; border: 1px solid var(--rule);
+}
+.team-card {
+  padding: 2.5rem; border-right: 1px solid var(--rule);
+  transition: background 0.2s; cursor: default;
+}
+.team-card:last-child { border-right: none; }
+.team-card:hover { background: var(--cream-dark); }
+
+.team-initials {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 1rem; font-weight: 300;
+  color: var(--cream); margin-bottom: 1.25rem; letter-spacing: 0.05em;
+}
+.team-name {
+  font-family: var(--serif); font-size: 1.15rem; font-weight: 300;
+  color: var(--ink); margin-bottom: 0.25rem;
+}
+.team-title {
+  font-family: var(--mono); font-size: 0.58rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.team-bio {
+  font-size: 0.84rem; color: var(--muted); line-height: 1.75; font-weight: 300;
+}
+.team-tags {
+  display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.25rem;
+}
+.tag {
+  font-family: var(--mono); font-size: 0.55rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--rule); color: var(--muted);
+}
+
+.team-note {
+  margin-top: 2.5rem; padding: 2rem 2.5rem;
+  border: 1px solid var(--rule-light);
+  background: #fff;
+  font-family: var(--serif); font-size: 1rem; font-weight: 300;
+  font-style: italic; color: var(--muted-dark); line-height: 1.7;
+  max-width: 700px;
+}
+
+/* ══════════════════════════════
+   ENGAGEMENTS / SERVICES
+══════════════════════════════ */
+.services-section { padding: 7rem 0; border-bottom: 1px solid var(--rule); }
+
+.services-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; background: var(--rule);
+}
+.service-card {
+  background: var(--cream); padding: 3rem;
+  transition: background 0.2s; position: relative;
+}
+.service-card:hover { background: #fff; }
+.service-letter {
+  font-family: var(--serif); font-size: 5rem; font-weight: 200;
+  color: var(--rule-light); line-height: 1; margin-bottom: 1.25rem;
+  transition: color 0.2s;
+}
+.service-card:hover .service-letter { color: var(--rule); }
+.service-title {
+  font-family: var(--serif); font-size: 1.3rem; font-weight: 300;
+  color: var(--ink); margin-bottom: 0.75rem; line-height: 1.2;
+}
+.service-desc {
+  font-size: 0.88rem; color: var(--muted); line-height: 1.8; font-weight: 300; margin-bottom: 1.5rem;
+}
+.service-detail {
+  font-family: var(--mono); font-size: 0.58rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--gold); display: flex; align-items: center; gap: 0.5rem;
+}
+.service-detail::before { content: ''; display: block; width: 1rem; height: 1px; background: var(--gold); }
+
+/* ══════════════════════════════
+   CONTACT
+══════════════════════════════ */
+.contact-section {
+  background: var(--ink); padding: 8rem 0;
+  position: relative; overflow: hidden;
+}
+.contact-section::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+}
+.contact-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 4rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: center;
+}
+.contact-left {}
+.contact-eyebrow {
+  font-family: var(--mono); font-size: 0.58rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold-light); margin-bottom: 2rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.contact-eyebrow::before { content: ''; width: 2rem; height: 1px; background: var(--gold-light); display: block; }
+.contact-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 200; color: var(--cream); line-height: 1.15;
+  margin-bottom: 1.5rem;
+}
+.contact-title em { font-style: italic; color: var(--gold-light); }
+.contact-body {
+  font-size: 0.95rem; color: rgba(240,236,227,0.5);
+  line-height: 1.85; font-weight: 300; margin-bottom: 3rem;
+}
+
+.contact-links { display: flex; flex-direction: column; gap: 1px; }
+.contact-link-item {
+  display: flex; align-items: center; gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  text-decoration: none; transition: background 0.2s, border-color 0.2s;
+}
+.contact-link-item:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.12); }
+.cli-icon {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.cli-icon svg { width: 14px; height: 14px; }
+.cli-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(240,236,227,0.35); margin-bottom: 0.15rem; }
+.cli-val { font-size: 0.9rem; color: var(--cream); font-weight: 300; }
+
+.contact-right {}
+.contact-right-label {
+  font-family: var(--mono); font-size: 0.58rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(240,236,227,0.25); margin-bottom: 2rem;
+}
+.promise-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+.promise-list li {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex; gap: 1.25rem; align-items: flex-start;
+}
+.promise-num { font-family: var(--mono); font-size: 0.55rem; color: var(--gold-light); padding-top: 0.2rem; }
+.promise-text { font-family: var(--serif); font-size: 0.95rem; font-weight: 200; color: rgba(240,236,227,0.7); line-height: 1.5; }
+.promise-text strong { color: var(--cream); font-weight: 300; }
+
+.contact-tagline {
+  margin-top: 2.5rem; padding-top: 2.5rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-family: var(--serif); font-size: 1.1rem;
+  font-style: italic; font-weight: 200;
+  color: var(--gold-light); line-height: 1.5;
+}
+
+/* ══════════════════════════════
+   FOOTER
+══════════════════════════════ */
+footer {
+  background: #0f0d0b;
+  padding: 2rem 4rem;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.footer-logo { font-family: var(--serif); font-size: 0.9rem; font-weight: 200; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(240,236,227,0.25); }
+.footer-links { display: flex; gap: 2rem; list-style: none; }
+.footer-links a { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(240,236,227,0.18); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: rgba(240,236,227,0.45); }
+.footer-right { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(240,236,227,0.15); }
+
+/* ── CONTACT FORM ── */
+.contact-form-label {
+  font-family: var(--mono); font-size: 0.58rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(240,236,227,0.25); margin-bottom: 2rem;
+}
+.form-group { margin-bottom: 1px; }
+.form-group input,
+.form-group textarea {
+  width: 100%; padding: 1rem 1.25rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  color: var(--cream); font-family: var(--sans);
+  font-size: 0.9rem; font-weight: 300;
+  outline: none; resize: none;
+  transition: background 0.2s, border-color 0.2s;
+  -webkit-appearance: none;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: rgba(240,236,227,0.25); }
+.form-group input:focus,
+.form-group textarea:focus {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(200,169,110,0.4);
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-bottom: 1px; }
+.form-submit {
+  width: 100%; padding: 1.1rem 2rem; margin-top: 1px;
+  background: var(--gold); border: none;
+  color: var(--cream); font-family: var(--mono);
+  font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.2s, transform 0.15s;
+}
+.form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+.form-submit:active { transform: translateY(0); }
+.form-success {
+  display: none; padding: 1.5rem;
+  background: rgba(122,106,64,0.15);
+  border: 1px solid rgba(200,169,110,0.3);
+  font-family: var(--serif); font-size: 1rem; font-weight: 300;
+  font-style: italic; color: var(--gold-light); line-height: 1.6;
+  text-align: center;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  nav { padding: 1.2rem 2rem; }
+  .nav-links { gap: 1.5rem; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-sidebar { position: static; height: auto; padding: 3rem 2rem; border-right: none; border-bottom: 1px solid var(--rule); }
+  .hero-main { padding: 3rem 2rem; }
+  .section-wrap { padding: 0 2rem; }
+  .approach-grid { grid-template-columns: 1fr; }
+  .approach-card { border-right: none; border-bottom: 1px solid var(--rule); }
+  .approach-card:last-child { border-bottom: none; }
+  .expertise-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .team-card { border-right: none; border-bottom: 1px solid var(--rule); }
+  .team-card:last-child { border-bottom: none; }
+  .services-grid { grid-template-columns: 1fr; }
+  .contact-inner { grid-template-columns: 1fr; gap: 4rem; }
+  .manifesto-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .hero-tenets { grid-template-columns: 1fr; }
+  .hero-tenet { border-right: none; }
+  footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" onclick="goHome();return false;" class="nav-logo" style="display:flex;align-items:center;text-decoration:none;" title="Jorrus — Home">
+    <svg width="160" height="28" viewBox="0 0 200 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="16" r="12" stroke="#c8c0b0" stroke-width="0.5"/>
+      <circle cx="14" cy="16" r="8" stroke="#7a6a40" stroke-width="0.5"/>
+      <circle cx="14" cy="16" r="2" fill="#1a1714"/>
+      <line x1="14" y1="2"  x2="14" y2="6"  stroke="#1a1714" stroke-width="0.75"/>
+      <line x1="14" y1="26" x2="14" y2="30" stroke="#1a1714" stroke-width="0.75"/>
+      <line x1="2"  y1="16" x2="6"  y2="16" stroke="#1a1714" stroke-width="0.75"/>
+      <line x1="22" y1="16" x2="26" y2="16" stroke="#1a1714" stroke-width="0.75"/>
+      <line x1="5"  y1="5"  x2="7"  y2="7"  stroke="#7a6a40" stroke-width="0.5"/>
+      <line x1="23" y1="5"  x2="21" y2="7"  stroke="#7a6a40" stroke-width="0.5"/>
+      <line x1="5"  y1="27" x2="7"  y2="25" stroke="#7a6a40" stroke-width="0.5"/>
+      <line x1="23" y1="27" x2="21" y2="25" stroke="#7a6a40" stroke-width="0.5"/>
+      <text id="wm" x="34" y="12" font-family="'Spectral',Georgia,serif" font-size="13" font-weight="200" fill="#1a1714" letter-spacing="5">JORRUS</text>
+      <line x1="34" y1="17" x2="107" y2="17" stroke="#7a6a40" stroke-width="0.4"/>
+      <text x="34" y="26" font-family="'Fragment Mono',monospace" font-size="5" fill="#7a6a40" textLength="73" lengthAdjust="spacing">STRATEGIC ADVISORY</text>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="navScrollTo('approach');return false;">Approach</a></li>
+    <li><a href="#" onclick="navScrollTo('expertise');return false;">Expertise</a></li>
+    <li><a href="#" onclick="navScrollTo('team');return false;">Team</a></li>
+    <li><a href="#" onclick="navScrollTo('services');return false;">Engagements</a></li>
+    <li><a href="#" onclick="navScrollTo('contact');return false;" class="nav-cta">Begin</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HERO ══ -->
+<div class="hero" id="home">
+  <div class="hero-sidebar">
+    <div>
+      <div class="sidebar-block">
+        <div class="sidebar-label">Since</div>
+        <div class="sidebar-val large">2008</div>
+      </div>
+      <div class="sidebar-block">
+        <div class="sidebar-label">Operating model</div>
+        <div class="sidebar-val">Boutique advisory. No junior teams. No templates. Every engagement is architected from first principles.</div>
+      </div>
+      <div class="sidebar-block">
+        <div class="sidebar-label">Sectors</div>
+        <ul class="sidebar-sectors">
+          <li>Family Offices &amp; Private Wealth</li>
+          <li>Startups &amp; Venture</li>
+          <li>Science &amp; Deep Tech</li>
+        </ul>
+      </div>
+    </div>
+    <div class="geo-mark">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46" stroke="#c8c0b0" stroke-width="0.5"/>
+        <circle cx="50" cy="50" r="32" stroke="#7a6a40" stroke-width="0.75"/>
+        <circle cx="50" cy="50" r="5" fill="#1a1714"/>
+        <line x1="50" y1="4"  x2="50" y2="18" stroke="#1a1714" stroke-width="1.2"/>
+        <line x1="50" y1="82" x2="50" y2="96" stroke="#1a1714" stroke-width="1.2"/>
+        <line x1="4"  y1="50" x2="18" y2="50" stroke="#1a1714" stroke-width="1.2"/>
+        <line x1="82" y1="50" x2="96" y2="50" stroke="#1a1714" stroke-width="1.2"/>
+        <line x1="16" y1="16" x2="22" y2="22" stroke="#7a6a40" stroke-width="0.75"/>
+        <line x1="84" y1="16" x2="78" y2="22" stroke="#7a6a40" stroke-width="0.75"/>
+        <line x1="16" y1="84" x2="22" y2="78" stroke="#7a6a40" stroke-width="0.75"/>
+        <line x1="84" y1="84" x2="78" y2="78" stroke="#7a6a40" stroke-width="0.75"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="hero-main">
+    <div class="hero-eyebrow">Finding paths others cannot see</div>
+    <h1 class="hero-headline reveal">
+      Where conventional<br>
+      thinking <em>ends,</em><br>
+      Jorrus begins.
+    </h1>
+    <p class="hero-body reveal rd1">
+      The largest consulting firms are built for replication — the same frameworks, the same hierarchies, the same answers. <strong>We are built for the opposite.</strong> Problems that require genuine originality, unusual combinations of expertise, and the courage to recommend the path no one else would see.
+    </p>
+    <div class="hero-divider reveal rd2"></div>
+    <div class="hero-tenets reveal rd2">
+      <div class="hero-tenet">
+        <div class="tenet-num">Principle 01</div>
+        <div class="tenet-text">No inherited answers — every problem starts from zero</div>
+      </div>
+      <div class="hero-tenet">
+        <div class="tenet-num">Principle 02</div>
+        <div class="tenet-text">Radical cross-domain thinking as a competitive edge</div>
+      </div>
+      <div class="hero-tenet">
+        <div class="tenet-num">Principle 03</div>
+        <div class="tenet-text">Creativity is a discipline, not a personality trait</div>
+      </div>
+      <div class="hero-tenet">
+        <div class="tenet-num">Principle 04</div>
+        <div class="tenet-text">Results over process — always</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MANIFESTO ══ -->
+<div class="manifesto-band">
+  <div class="manifesto-inner">
+    <div class="manifesto-label reveal">
+      Why Jorrus<br>exists
+    </div>
+    <div class="manifesto-quote reveal rd1">
+      "McKinsey protects the status quo. Bain replicates what worked before. BCG sells frameworks by the slide.<br><br>
+      <strong>We sell none of that.</strong> We bring minds shaped by intelligence work, aerospace engineering, deep science, and entrepreneurship — and we point them at your hardest problem. The answer will surprise you. That is the point."
+    </div>
+  </div>
+</div>
+
+<!-- ══ APPROACH ══ -->
+<section id="approach" class="approach-section">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">01 —</span>
+      <h2 class="section-title">How we think</h2>
+    </div>
+    <div class="approach-grid">
+      <div class="approach-card reveal">
+        <div class="approach-num">01</div>
+        <div class="approach-title">First principles, every time</div>
+        <div class="approach-desc">We never arrive with a pre-built answer. Every engagement begins with a genuine diagnostic — interrogating the problem from scratch, without the bias of prior frameworks or industry convention.</div>
+      </div>
+      <div class="approach-card reveal rd1">
+        <div class="approach-num">02</div>
+        <div class="approach-title">Cross-domain synthesis</div>
+        <div class="approach-desc">The most powerful insights come from applying knowledge from one domain to the language of another. Our team's diverse backgrounds — science, intelligence, capital markets, diplomacy — are not incidental. They are the methodology.</div>
+      </div>
+      <div class="approach-card reveal rd2">
+        <div class="approach-num">03</div>
+        <div class="approach-title">Comfort with the unexpected</div>
+        <div class="approach-desc">Conservative firms hedge. They give clients the answer that is easiest to defend. We give clients the answer that is most likely to work — even when it surprises everyone in the room. Especially then.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EXPERTISE ══ -->
+<section id="expertise" class="expertise-section">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">02 —</span>
+      <h2 class="section-title">Where we operate</h2>
+    </div>
+    <div class="expertise-grid">
+      <div class="expertise-card reveal">
+        <div class="exp-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#7a6a40" stroke-width="1.2" stroke-linecap="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="exp-content">
+          <div class="exp-sector">Family Offices &amp; Private Wealth</div>
+          <div class="exp-title">Complex capital &amp; sensitive decisions</div>
+          <div class="exp-desc">High-stakes advisory for principals and their teams — strategy, portfolio logic, succession, and the sensitive interpersonal dynamics that don't appear on any balance sheet. Complete discretion guaranteed.</div>
+        </div>
+      </div>
+      <div class="expertise-card reveal rd1">
+        <div class="exp-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#7a6a40" stroke-width="1.2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <div class="exp-content">
+          <div class="exp-sector">Startups &amp; Venture</div>
+          <div class="exp-title">From concept to capital</div>
+          <div class="exp-desc">End-to-end advisory for founding teams — business model architecture, pitch development, investor strategy, and the hard decisions that define whether a company thrives or stalls. We've been in the room on both sides.</div>
+        </div>
+      </div>
+      <div class="expertise-card reveal">
+        <div class="exp-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#7a6a40" stroke-width="1.2" stroke-linecap="round">
+            <path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v11m0 0H5a2 2 0 01-2-2V9m6 5h10a2 2 0 002-2V9m-6 9v3m-3 0h6"/>
+          </svg>
+        </div>
+        <div class="exp-content">
+          <div class="exp-sector">Science &amp; Deep Tech</div>
+          <div class="exp-title">Translating technical vision into strategic reality</div>
+          <div class="exp-desc">We speak the language of engineers, researchers, and technical founders — and we translate it into strategy, capital, and market position. Quantum, aerospace, energy, biotech, AI infrastructure. We bridge the gap between scientific breakthrough and commercial traction.</div>
+        </div>
+      </div>
+      <div class="expertise-card reveal rd1">
+        <div class="exp-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#7a6a40" stroke-width="1.2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+          </svg>
+        </div>
+        <div class="exp-content">
+          <div class="exp-sector">Cross-sector</div>
+          <div class="exp-title">Problems that resist categorization</div>
+          <div class="exp-desc">The most interesting problems don't live inside one sector. They emerge at the intersection of capital, technology, human organization, and geopolitics. That intersection is precisely where Jorrus is most useful.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TEAM ══ -->
+<section id="team" class="team-section">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">03 —</span>
+      <h2 class="section-title">The people behind it</h2>
+    </div>
+    <p class="team-intro reveal">
+      Jorrus is built around a simple conviction: <strong>the best advisory teams are not built from specialists.</strong> They are built from polymaths — people whose careers crossed multiple worlds and who carry the lessons of each into every engagement.
+    </p>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-initials">EB</div>
+        <div class="team-name">Ethan Boivie</div>
+        <div class="team-title">Founder · Managing Director</div>
+        <div class="team-bio">Two decades spanning U.S. military intelligence, aerospace engineering, investment banking, and entrepreneurship. Former NGA Intelligence Officer; founder of three ventures; advisor to C-suite executives and family offices across five industries. Holds TS/SCI clearance background, MS Engineering, and an MBA from IE Business School (Madrid).</div>
+        <div class="team-tags">
+          <span class="tag">Strategy</span>
+          <span class="tag">Capital Markets</span>
+          <span class="tag">Intelligence</span>
+          <span class="tag">Ventures</span>
+          <span class="tag">Diplomacy</span>
+        </div>
+      </div>
+      <div class="team-card reveal rd1">
+        <div class="team-initials" style="background: #3b3028;">+</div>
+        <div class="team-name">Senior Associates</div>
+        <div class="team-title">By engagement</div>
+        <div class="team-bio">Jorrus engages a carefully curated network of senior practitioners matched to each client's specific challenge. No generalists. No junior teams. Every associate brought in has operated at the highest level of their domain.</div>
+        <div class="team-tags">
+          <span class="tag">Deep Tech</span>
+          <span class="tag">Life Sciences</span>
+          <span class="tag">Energy</span>
+          <span class="tag">Defense</span>
+          <span class="tag">Finance</span>
+        </div>
+      </div>
+      <div class="team-card reveal rd2">
+        <div class="team-initials" style="background: #3b3028;">?</div>
+        <div class="team-name">Your challenge</div>
+        <div class="team-title">Shapes the team</div>
+        <div class="team-bio">We don't assign you a pre-formed practice group. We listen to your problem and build the right team around it. That distinction — client-first assembly versus firm-first deployment — is what makes the difference.</div>
+        <div class="team-tags">
+          <span class="tag">Tailored</span>
+          <span class="tag">Senior-led</span>
+          <span class="tag">Confidential</span>
+        </div>
+      </div>
+    </div>
+    <div class="team-note reveal">
+      "We are actively growing the Jorrus team. If your background is unconventional, your expertise spans unusual territory, and you believe the best ideas come from the edges of disciplines — we want to hear from you."
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
+<section id="services" class="services-section">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">04 —</span>
+      <h2 class="section-title">Engagement models</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-letter">I</div>
+        <div class="service-title">Clarity Sprint</div>
+        <div class="service-desc">A focused, bounded engagement for leaders who are stuck. We diagnose the real problem (which is often not the stated problem), synthesize competing inputs, and deliver a clear, prioritized path forward. Fixed fee. Typically 2–4 weeks.</div>
+        <div class="service-detail">Ideal for: complex decisions, strategic deadlock, new ventures</div>
+      </div>
+      <div class="service-card reveal rd1">
+        <div class="service-letter">II</div>
+        <div class="service-title">Ongoing Advisory Retainer</div>
+        <div class="service-desc">A monthly relationship for executives, founders, and principals who need a senior thinking partner in their corner. No templates, no junior handoffs. Direct access to Jorrus principals across strategy, growth, capital, and sensitive decisions.</div>
+        <div class="service-detail">Ideal for: CEOs, family office principals, founding teams</div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-letter">III</div>
+        <div class="service-title">Capital Advisory</div>
+        <div class="service-desc">Full-cycle support for founders and executives raising capital — pitch readiness, market positioning, financial architecture, investor identification, and transaction support from first call to close. Deep expertise in Aerospace, Deep Tech, and adjacent sectors.</div>
+        <div class="service-detail">Ideal for: seed through growth-stage raises, M&amp;A, restructuring</div>
+      </div>
+      <div class="service-card reveal rd1">
+        <div class="service-letter">IV</div>
+        <div class="service-title">Transformation Projects</div>
+        <div class="service-desc">Defined-scope engagements for organizations navigating major change — new strategy, new structure, new market, or new leadership. We work alongside your team, not above it, and we leave frameworks you can actually use.</div>
+        <div class="service-detail">Ideal for: pivots, post-merger integration, market entry</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="contact-eyebrow reveal">Start a conversation</div>
+      <h2 class="contact-title reveal">The right problem<br>finds the <em>right</em><br>people.</h2>
+      <p class="contact-body reveal">
+        If you have a challenge that is complex, sensitive, or simply doesn't fit the usual playbook — that is exactly where Jorrus does its best work. Reach out directly. No intake forms, no junior screens.
+      </p>
+      <div class="contact-links reveal">
+        <a href="/cdn-cgi/l/email-protection#7d1f12140b14183d1a101c1411531e1210" class="contact-link-item">
+          <div class="cli-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="cli-label">Email</div>
+            <div class="cli-val"><span class="__cf_email__" data-cfemail="f89a97918e919db89f95999194d69b9795">[email&#160;protected]</span></div>
+          </div>
+        </a>
+        <a href="tel:3106218615" class="contact-link-item">
+          <div class="cli-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 15.1a19.79 19.79 0 01-3.07-8.67A2 2 0 013.81 4.5h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 12.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 19.1v2.82z"/></svg>
+          </div>
+          <div>
+            <div class="cli-label">Phone</div>
+            <div class="cli-val">310-621-8615</div>
+          </div>
+        </a>
+        <div class="contact-link-item" style="cursor:default;">
+          <div class="cli-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="cli-label">Based in</div>
+            <div class="cli-val">Miami, FL — operating globally</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-tagline reveal">
+        "Your problems, solved with style."
+      </div>
+    </div>
+    <div class="contact-right reveal rd2">
+      <div class="contact-form-label">Send a message</div>
+      <form id="contact-form" onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" id="form-name" name="name" placeholder="Your name" required autocomplete="name"/>
+          </div>
+          <div class="form-group">
+            <input type="email" id="form-email" name="email" placeholder="Your email" required autocomplete="email"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="text" id="form-org" name="org" placeholder="Organization (optional)" autocomplete="organization"/>
+        </div>
+        <div class="form-group">
+          <textarea id="form-message" name="message" placeholder="Tell us about your challenge. The more context, the better." rows="6" required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send message &#8594;</button>
+      </form>
+      <div class="form-success" id="form-success">
+        "Thank you. We will be in touch directly — no auto-responders, no waiting queues."
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <svg width="120" height="22" viewBox="0 0 200 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="16" r="12" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
+      <circle cx="14" cy="16" r="8" stroke="#7a6a40" stroke-width="0.5"/>
+      <circle cx="14" cy="16" r="2" fill="rgba(200,169,110,0.6)"/>
+      <line x1="14" y1="2"  x2="14" y2="6"  stroke="rgba(200,169,110,0.5)" stroke-width="0.75"/>
+      <line x1="14" y1="26" x2="14" y2="30" stroke="rgba(200,169,110,0.5)" stroke-width="0.75"/>
+      <line x1="2"  y1="16" x2="6"  y2="16" stroke="rgba(200,169,110,0.5)" stroke-width="0.75"/>
+      <line x1="22" y1="16" x2="26" y2="16" stroke="rgba(200,169,110,0.5)" stroke-width="0.75"/>
+      <line x1="5"  y1="5"  x2="7"  y2="7"  stroke="#7a6a40" stroke-width="0.5"/>
+      <line x1="23" y1="5"  x2="21" y2="7"  stroke="#7a6a40" stroke-width="0.5"/>
+      <line x1="5"  y1="27" x2="7"  y2="25" stroke="#7a6a40" stroke-width="0.5"/>
+      <line x1="23" y1="27" x2="21" y2="25" stroke="#7a6a40" stroke-width="0.5"/>
+      <text x="34" y="12" font-family="'Spectral',Georgia,serif" font-size="13" font-weight="200" fill="rgba(240,236,227,0.3)" letter-spacing="5">JORRUS</text>
+      <line x1="34" y1="17" x2="107" y2="17" stroke="#7a6a40" stroke-width="0.4"/>
+      <text x="34" y="26" font-family="'Fragment Mono',monospace" font-size="5" fill="rgba(122,106,64,0.6)" textLength="73" lengthAdjust="spacing">STRATEGIC ADVISORY</text>
+    </svg>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#" onclick="navScrollTo('approach');return false;">Approach</a></li>
+    <li><a href="#" onclick="navScrollTo('expertise');return false;">Expertise</a></li>
+    <li><a href="#" onclick="navScrollTo('team');return false;">Team</a></li>
+    <li><a href="#" onclick="navScrollTo('services');return false;">Engagements</a></li>
+    <li><a href="#" onclick="navScrollTo('contact');return false;">Contact</a></li>
+  </ul>
+  <div class="footer-right">Miami, FL · Est. 2025</div>
+</footer>
+
+
+<script>
+  // ── Home button — scroll to top, iframe-safe ──
+  function goHome() {
+    try {
+      window.top.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch(e) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  // ── Contact form → mailto ──
+  function submitForm(e) {
+    e.preventDefault();
+    var name    = document.getElementById('form-name').value.trim();
+    var email   = document.getElementById('form-email').value.trim();
+    var org     = document.getElementById('form-org').value.trim();
+    var message = document.getElementById('form-message').value.trim();
+
+    var subject = encodeURIComponent('Jorrus inquiry from ' + name);
+    var body    = encodeURIComponent(
+      'Name: ' + name + '\n' +
+      'Email: ' + email + '\n' +
+      (org ? 'Organization: ' + org + '\n' : '') +
+      '\nMessage:\n' + message
+    );
+
+    window.location.href = 'mailto:boivie@gmail.com?subject=' + subject + '&body=' + body;
+
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+  // Google Sites controls all scrolling at the parent page level.
+  // The iframe has overflow:hidden — scrollIntoView() and body.scrollTop
+  // both silently fail. The fix: measure each section's offsetTop inside
+  // the iframe, then use window.top.scrollTo() to scroll the actual page.
+  // We also account for the iframe's own offsetTop within the parent page
+  // by reading window.frameElement.getBoundingClientRect() when available.
+
+  function getIframeTopOffset() {
+    try {
+      // If same-origin access is allowed, get the iframe's position in the parent
+      var rect = window.frameElement && window.frameElement.getBoundingClientRect();
+      if (rect) return rect.top + window.top.scrollY;
+    } catch(e) {}
+    // Cross-origin fallback: estimate based on typical Google Sites header height
+    return window.top.scrollY;
+  }
+
+  function navScrollTo(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+
+    var sectionOffsetInIframe = el.getBoundingClientRect().top + window.scrollY;
+    var navHeight = 72; // our fixed nav bar height
+
+    try {
+      // Try to scroll the top-level window (works when Google Sites allows it)
+      var iframeTop = getIframeTopOffset();
+      window.top.scrollTo({
+        top: iframeTop + sectionOffsetInIframe - navHeight,
+        behavior: 'smooth'
+      });
+    } catch(e) {
+      // Same-origin fallback
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // ── Scroll reveal (use IntersectionObserver on window.top scroll if possible) ──
+  var revealEls = document.querySelectorAll('.reveal');
+
+  function checkReveals() {
+    revealEls.forEach(function(el) {
+      var rect = el.getBoundingClientRect();
+      // Consider visible if top is within viewport (with 60px bottom buffer)
+      if (rect.top < (window.innerHeight - 60)) {
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  // Listen on both the iframe window and parent window scroll
+  window.addEventListener('scroll', checkReveals);
+  try { window.top.addEventListener('scroll', checkReveals); } catch(e) {}
+  // Run once on load
+  setTimeout(checkReveals, 300);
+
+  // ── Nav compact on scroll ──
+  var nav = document.getElementById('main-nav');
+  function handleNavScroll() {
+    try {
+      nav.classList.toggle('scrolled', window.top.scrollY > 60);
+    } catch(e) {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }
+  }
+  window.addEventListener('scroll', handleNavScroll);
+  try { window.top.addEventListener('scroll', handleNavScroll); } catch(e) {}
+
+  // ── Active nav link highlight ──
+  var sectionIds = ['approach','expertise','team','services','contact'];
+  var navLinks = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+
+  function handleNavHighlight() {
+    var scrollPos;
+    try { scrollPos = window.top.scrollY; } catch(e) { scrollPos = window.scrollY; }
+
+    var iframeTop = getIframeTopOffset();
+    var current = '';
+    sectionIds.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) {
+        var elTop = iframeTop + el.offsetTop;
+        if (scrollPos >= elTop - 140) current = id;
+      }
+    });
+    navLinks.forEach(function(a, i) {
+      a.style.color = sectionIds[i] === current ? 'var(--ink)' : '';
+    });
+  }
+  window.addEventListener('scroll', handleNavHighlight);
+  try { window.top.addEventListener('scroll', handleNavHighlight); } catch(e) {}
+</script>
+</body>
+</html>
