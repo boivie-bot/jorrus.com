@@ -1086,3 +1086,19 @@ footer {
 </script>
 </body>
 </html>
+  // ── Active nav link highlight ──
+  var sectionIds = ['approach', 'expertise', 'team', 'services', 'contact'];
+  var navLinks = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+  window.addEventListener('scroll', function() {
+    var current = '';
+    sectionIds.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - NAV_H - 10) current = id;
+    });
+    navLinks.forEach(function(a, i) {
+      a.style.color = sectionIds[i] === current ? 'var(--ink)' : '';
+    });
+  });
+</script>
+</body>
+</html>
