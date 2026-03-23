@@ -568,90 +568,9 @@ footer {
   .hero-tenet { border-right: none; }
   footer { flex-direction: column; gap: 1.5rem; text-align: center; }
 }
-
-/* ── DA VINCI BACKGROUND ── */
-#dv-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-#dv-vitruvian, #dv-flying, #dv-aerial {
-  position: absolute;
-  background-repeat: no-repeat;
-  background-size: contain;
-  filter: sepia(40%) contrast(65%) brightness(112%);
-}
-#dv-vitruvian {
-  width: 420px; height: 560px;
-  top: 72px; right: 22%;
-  background-image: url('images/vitruvian.jpg');
-  background-position: top center;
-  opacity: 0.09;
-}
-#dv-flying {
-  width: 300px; height: 210px;
-  top: 80px; right: 0;
-  background-image: url('images/flying.jpg');
-  background-size: cover;
-  opacity: 0.08;
-}
-#dv-aerial {
-  width: 240px; height: 190px;
-  bottom: 60px; right: 1%;
-  background-image: url('images/aerial.jpg');
-  background-size: cover;
-  opacity: 0.07;
-}
-#dv-geo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.12;
-}
 </style>
 </head>
 <body>
-
-<!-- Da Vinci background — fixed, z-index 0, never affects layout -->
-<div id="dv-bg" aria-hidden="true">
-  <div id="dv-vitruvian"></div>
-  <div id="dv-flying"></div>
-  <div id="dv-aerial"></div>
-  <svg id="dv-geo" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <pattern id="dvg" x="0" y="0" width="26" height="26" patternUnits="userSpaceOnUse">
-      <path d="M 26 0 L 0 0 0 26" stroke="#7a6a40" stroke-width="0.4"/>
-    </pattern>
-    <rect width="1200" height="900" fill="url(#dvg)"/>
-    <line x1="0" y1="0" x2="1200" y2="900" stroke="#1a1714" stroke-width="0.5"/>
-    <line x1="0" y1="900" x2="1200" y2="0" stroke="#1a1714" stroke-width="0.35"/>
-    <circle cx="1073" cy="125" r="232" stroke="#7a6a40" stroke-width="1.8"/>
-    <circle cx="1037" cy="160" r="105" stroke="#7a6a40" stroke-width="2.2"/>
-    <circle cx="1095" cy="104" r="316" stroke="#1a1714" stroke-width="0.75"/>
-    <circle cx="1054" cy="144" r="162" stroke="#1a1714" stroke-width="0.85"/>
-    <circle cx="1120" cy="80"  r="420" stroke="#7a6a40" stroke-width="0.55"/>
-    <circle cx="1023" cy="174" r="60"  stroke="#1a1714" stroke-width="0.75"/>
-    <circle cx="1012" cy="185" r="27"  stroke="#7a6a40" stroke-width="1.4"/>
-    <line x1="1037" y1="55"  x2="1037" y2="70"  stroke="#7a6a40" stroke-width="1.8"/>
-    <line x1="1037" y1="265" x2="1037" y2="280" stroke="#7a6a40" stroke-width="1.8"/>
-    <line x1="932"  y1="160" x2="947"  y2="160" stroke="#7a6a40" stroke-width="1.8"/>
-    <line x1="1142" y1="160" x2="1127" y2="160" stroke="#7a6a40" stroke-width="1.8"/>
-    <line x1="963"  y1="86"  x2="975"  y2="98"  stroke="#7a6a40" stroke-width="1.8"/>
-    <line x1="1111" y1="86"  x2="1099" y2="98"  stroke="#7a6a40" stroke-width="1.8"/>
-    <line x1="963"  y1="234" x2="975"  y2="222" stroke="#7a6a40" stroke-width="1.8"/>
-    <line x1="1111" y1="234" x2="1099" y2="222" stroke="#7a6a40" stroke-width="1.8"/>
-    <path d="M 55 820 A 130 130 0 0 1 315 820" stroke="#7a6a40" stroke-width="0.6"/>
-    <line x1="55"  y1="820" x2="185" y2="690" stroke="#7a6a40" stroke-width="0.55"/>
-    <line x1="315" y1="820" x2="185" y2="690" stroke="#7a6a40" stroke-width="0.55"/>
-    <line x1="28"  y1="40"  x2="28"  y2="860" stroke="#1a1714" stroke-width="0.4"/>
-    <circle cx="720" cy="780" r="44" stroke="#7a6a40" stroke-width="0.6"/>
-    <circle cx="720" cy="780" r="30" stroke="#7a6a40" stroke-width="0.45"/>
-    <circle cx="720" cy="780" r="10" stroke="#1a1714" stroke-width="0.65"/>
-    <path d="M 120 200 Q 120 140 180 140 Q 240 140 240 200 Q 240 275 160 275 Q 82 275 82 195 Q 82 130 155 125" stroke="#7a6a40" stroke-width="0.55" fill="none"/>
-  </svg>
-</div>
 
 <!-- NAV -->
 <nav id="main-nav">
@@ -687,8 +606,7 @@ footer {
   <div class="hero-sidebar">
     <div>
       <div class="sidebar-block">
-        <div class="sidebar-label">Since</div>
-        <div class="sidebar-val large">2008</div>
+        <div class="sidebar-label">Since 2008</div>
       </div>
       <div class="sidebar-block">
         <div class="sidebar-label">Operating model</div>
@@ -953,13 +871,13 @@ footer {
         If you have a challenge that is complex, sensitive, or simply doesn't fit the usual playbook — that is exactly where Jorrus does its best work. Reach out directly. No intake forms, no junior screens.
       </p>
       <div class="contact-links reveal">
-        <a href="/cdn-cgi/l/email-protection#6306170b020d23090c111116104d000c0e" class="contact-link-item">
+        <a href="mailto:ethan@jorrus.com" class="contact-link-item">
           <div class="cli-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
           <div>
-            <div class="cli-label">Email</div>
-            <div class="cli-val"><span class="__cf_email__" data-cfemail="3e5b4a565f507e54514c4c4b4d105d5153">[email&#160;protected]</span></div>
+            <div class="cli-label">Start a conversation</div>
+            <div class="cli-val">ethan@jorrus.com</div>
           </div>
         </a>
         <a href="tel:3106218615" class="contact-link-item">
@@ -1042,7 +960,7 @@ footer {
 </footer>
 
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   var NAV_H = 72; // fixed nav bar height in px
 
   // ── Nav scroll — jumps to the correct section, offset by nav height ──
