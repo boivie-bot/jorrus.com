@@ -28,6 +28,7 @@ html, body { scroll-behavior: smooth; }
 
 body { font-family: var(--sans); background: var(--cream); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
 
+
 /* ── GRAIN ── */
 body::after {
   content: '';
@@ -569,6 +570,59 @@ footer {
   footer { flex-direction: column; gap: 1.5rem; text-align: center; }
 }
 </style>
+<!-- Da Vinci background styles — separate block, safe -->
+<style>
+.hero { position: relative; }
+.hero-sidebar, .hero-main { position: relative; z-index: 2; }
+.dv-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  align-self: stretch;
+  justify-self: stretch;
+}
+.dv-vitruvian, .dv-flying, .dv-aerial {
+  position: absolute;
+  background-repeat: no-repeat;
+  mix-blend-mode: multiply;
+  filter: sepia(50%) contrast(68%) brightness(110%);
+}
+.dv-vitruvian {
+  width: 400px; height: 540px;
+  right: 20%; top: 0;
+  background-image: url('images/vitruvian.jpg');
+  background-size: contain;
+  background-position: center top;
+  opacity: 0.10;
+}
+.dv-flying {
+  width: 300px; height: 210px;
+  right: 1%; top: 30px;
+  background-image: url('images/flying.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.08;
+}
+.dv-aerial {
+  width: 240px; height: 190px;
+  right: 2%; bottom: 30px;
+  background-image: url('images/aerial.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.07;
+}
+.dv-geo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.13;
+}
+</style>
 </head>
 <body>
 
@@ -602,11 +656,49 @@ footer {
 </nav>
 
 <!-- ══ HERO ══ -->
+<div style="position:relative; min-height:100vh;">
+<div class="dv-layer">
+    <div class="dv-vitruvian"></div>
+    <div class="dv-flying"></div>
+    <div class="dv-aerial"></div>
+    <svg class="dv-geo" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <pattern id="dv-grid" x="0" y="0" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M 26 0 L 0 0 0 26" stroke="#7a6a40" stroke-width="0.4"/></pattern>
+      <rect width="1200" height="900" fill="url(#dv-grid)" opacity="0.55"/>
+      <line x1="0" y1="0" x2="1200" y2="900" stroke="#1a1714" stroke-width="0.5" opacity="0.35"/>
+      <line x1="0" y1="900" x2="1200" y2="0" stroke="#1a1714" stroke-width="0.35" opacity="0.25"/>
+      <circle cx="1073" cy="125" r="232" stroke="#7a6a40" stroke-width="1.8" opacity="0.7"/>
+      <circle cx="1037" cy="160" r="105" stroke="#7a6a40" stroke-width="2.0" opacity="0.8"/>
+      <circle cx="1095" cy="104" r="316" stroke="#1a1714" stroke-width="0.75" opacity="0.45"/>
+      <circle cx="1054" cy="144" r="162" stroke="#1a1714" stroke-width="0.85" opacity="0.4"/>
+      <circle cx="1120" cy="80"  r="420" stroke="#7a6a40" stroke-width="0.55" opacity="0.3"/>
+      <circle cx="1023" cy="174" r="60"  stroke="#1a1714" stroke-width="0.75" opacity="0.5"/>
+      <circle cx="1012" cy="185" r="27"  stroke="#7a6a40" stroke-width="1.4"  opacity="0.7"/>
+      <line x1="1037" y1="55"  x2="1037" y2="70"  stroke="#7a6a40" stroke-width="1.8" opacity="0.8"/>
+      <line x1="1037" y1="265" x2="1037" y2="280" stroke="#7a6a40" stroke-width="1.8" opacity="0.8"/>
+      <line x1="932"  y1="160" x2="947"  y2="160" stroke="#7a6a40" stroke-width="1.8" opacity="0.8"/>
+      <line x1="1142" y1="160" x2="1127" y2="160" stroke="#7a6a40" stroke-width="1.8" opacity="0.8"/>
+      <line x1="963"  y1="86"  x2="975"  y2="98"  stroke="#7a6a40" stroke-width="1.8" opacity="0.8"/>
+      <line x1="1111" y1="86"  x2="1099" y2="98"  stroke="#7a6a40" stroke-width="1.8" opacity="0.8"/>
+      <line x1="963"  y1="234" x2="975"  y2="222" stroke="#7a6a40" stroke-width="1.8" opacity="0.8"/>
+      <line x1="1111" y1="234" x2="1099" y2="222" stroke="#7a6a40" stroke-width="1.8" opacity="0.8"/>
+      <path d="M 55 820 A 130 130 0 0 1 315 820" stroke="#7a6a40" stroke-width="0.6" opacity="0.5"/>
+      <line x1="55"  y1="820" x2="185" y2="690" stroke="#7a6a40" stroke-width="0.55" opacity="0.5"/>
+      <line x1="315" y1="820" x2="185" y2="690" stroke="#7a6a40" stroke-width="0.55" opacity="0.5"/>
+      <line x1="28"  y1="40"  x2="28"  y2="860" stroke="#1a1714" stroke-width="0.4"  opacity="0.35"/>
+      <circle cx="740" cy="780" r="46" stroke="#7a6a40" stroke-width="0.6"  opacity="0.5"/>
+      <circle cx="740" cy="780" r="32" stroke="#7a6a40" stroke-width="0.45" opacity="0.4"/>
+      <circle cx="740" cy="780" r="11" stroke="#1a1714" stroke-width="0.65" opacity="0.5"/>
+      <path d="M 120 180 Q 120 120 180 120 Q 240 120 240 180 Q 240 260 160 260 Q 80 260 80 170 Q 80 100 160 100" stroke="#7a6a40" stroke-width="0.55" opacity="0.45"/>
+    </svg>
+  </div>
+  </div><!-- end dv-layer -->
 <div class="hero" id="home">
+
   <div class="hero-sidebar">
     <div>
       <div class="sidebar-block">
-        <div class="sidebar-label">Since 2008</div>
+        <div class="sidebar-label">Since</div>
+        <div class="sidebar-val large">2008</div>
       </div>
       <div class="sidebar-block">
         <div class="sidebar-label">Operating model</div>
@@ -668,7 +760,7 @@ footer {
       </div>
     </div>
   </div>
-</div>
+</div><!-- end hero wrapper -->
 
 <!-- ══ MANIFESTO ══ -->
 <div class="manifesto-band">
@@ -785,7 +877,7 @@ footer {
         <div class="team-initials">EB</div>
         <div class="team-name">Ethan Boivie</div>
         <div class="team-title">Founder · Managing Director</div>
-        <div class="team-bio">Two decades spanning U.S. military intelligence, aerospace engineering, investment banking, and entrepreneurship. Former NGA Intelligence Officer; founder of three ventures; advisor to C-suite executives and family offices across five industries. Holds TS/SCI clearance background, MS Engineering, and an MBA from IE Business School (Madrid).</div>
+        <div class="team-bio">Two decades spanning U.S. military intelligence, aerospace engineering, investment banking, and entrepreneurship. Former NGA Intelligence Officer; founder of three ventures; advisor to C-suite executives and family offices across five industries. Holds a former TS/SCI clearance, an MS in Mechanical Engineering, and an MBA from IE Business School.</div>
         <div class="team-tags">
           <span class="tag">Strategy</span>
           <span class="tag">Capital Markets</span>
@@ -871,13 +963,13 @@ footer {
         If you have a challenge that is complex, sensitive, or simply doesn't fit the usual playbook — that is exactly where Jorrus does its best work. Reach out directly. No intake forms, no junior screens.
       </p>
       <div class="contact-links reveal">
-        <a href="mailto:ethan@jorrus.com" class="contact-link-item">
+        <a href="/cdn-cgi/l/email-protection#1376677b727d53797c616166603d707c7e" class="contact-link-item">
           <div class="cli-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="#c8a96e" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
           <div>
             <div class="cli-label">Start a conversation</div>
-            <div class="cli-val">ethan@jorrus.com</div>
+            <div class="cli-val"><span class="__cf_email__" data-cfemail="0e6b7a666f604e64617c7c7b7d206d6163">[email&#160;protected]</span></div>
           </div>
         </a>
         <a href="tel:3106218615" class="contact-link-item">
@@ -960,7 +1052,7 @@ footer {
 </footer>
 
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   var NAV_H = 72; // fixed nav bar height in px
 
   // ── Nav scroll — jumps to the correct section, offset by nav height ──
@@ -1023,9 +1115,4 @@ footer {
   });
 
   // ── Active nav link highlight ──
-  var sectionIds = ['approach', 'expertise', 'team', 'services', 'contact'];
-  var navLinks = document.querySelectorAll('.nav-links a:not(.nav-cta)');
-  window.addEventListener('scroll', function() {
-    var current = '';
-    sectionIds.forEach(function(id) {
-      var el = document.getElementByI
+  var sectionIds = ['approach', 'expertise', 'team', 'servic
